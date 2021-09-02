@@ -20,7 +20,6 @@ const CartItem = (props) => {
 	};
 
 	const removeFromCartHandler = () => {
-		console.log(id);
 		dispatch(cartActions.removeItemFromCart(id));
 	};
 
