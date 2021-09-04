@@ -9,7 +9,7 @@ export const requestCartData = () => {
 			});
 
 			if (!response.ok) {
-				throw Error('Could not fetch data!');
+				throw new Error('Could not fetch data!');
 			}
 
 			const data = response.json();
@@ -18,15 +18,8 @@ export const requestCartData = () => {
 		};
 
 		try {
-			const fetchData = await fetchCartData();
-			dispatch(cartActions.replaceCartItems(fetchData));
-			dispatch(
-				uiActions.showNotification({
-					status: 'success',
-					title: 'Success!',
-					message: 'Sent Cart Data Successfully!'
-				})
-			);
+			const cartData = await fetchCartData();
+			dispatch(cartActions.replaceCartItems(cartData));
 		} catch (err) {
 			dispatch(
 				uiActions.showNotification({

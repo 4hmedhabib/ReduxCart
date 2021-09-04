@@ -16,7 +16,7 @@ function App() {
 
 	useEffect(
 		() => {
-			dispatch(requestCartData);
+			dispatch(requestCartData());
 		},
 		[ dispatch ]
 	);
