@@ -1,12 +1,41 @@
+import { cartActions } from './cart-slice';
 import { uiActions } from './ui-slice';
 
 export const requestCartData = () => {
 	return async (dispatch) => {
-		const sendRequest = async () => {
+		const fetchCartData = async () => {
 			const response = await fetch('https://react-http-992d0-default-rtdb.firebaseio.com/cart.json', {
 				method: 'GET'
 			});
+
+			if (!response.ok) {
+				throw Error('Could not fetch data!');
+			}
+
+			const data = response.json();
+
+			return data;
 		};
+
+		try {
+			const fetchData = await fetchCartData();
+			dispatch(cartActions.replaceCartItems(fetchData));
+			dispatch(
+				uiActions.showNotification({
+					status: 'success',
+					title: 'Success!',
+					message: 'Sent Cart Data Successfully!'
+				})
+			);
+		} catch (err) {
+			dispatch(
+				uiActions.showNotification({
+					status: 'error',
+					title: 'Error!',
+					message: 'Fetch Cart Data failed!'
+				})
+			);
+		}
 	};
 };
 
